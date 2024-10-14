@@ -10,6 +10,8 @@ import SignInPage from "./route/signInPage/SignInPage.jsx";
 import DashboardLayout from "./layouts/dashboardLayout/DashboardLayout.jsx";
 import SignUpPage from "./route/signUpPage/SignUpPage.jsx";
 
+
+
 const router = createBrowserRouter([
   {
     element: <RootLayout />,
