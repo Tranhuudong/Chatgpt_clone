@@ -3,13 +3,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 
   .wrapper {
     flex: 1;
-    overflow-y: auto;
-    scrollbar-color: #625c77 #847f94;
-    scrollbar-width: thin;
-
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    padding-bottom: 60px; 
+    scrollbar-width: none; /* Ẩn thanh cuộn trên Firefox */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -19,6 +19,12 @@
       display: flex;
       flex-direction: column;
       gap: 20px;
+
+
+       /* Ẩn thanh cuộn trên Chrome, Safari */
+       &::-webkit-scrollbar {
+        display: none;
+      }
 
       p,
       li {

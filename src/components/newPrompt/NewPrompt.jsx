@@ -1,21 +1,30 @@
-import React from 'react'
-import "./NewPrompt.css"
+import React, { useEffect, useRef } from "react";
+import "./NewPrompt.css";
 
 const NewPrompt = () => {
-  return (
-    <div className='newPrompt'>
-        <form className='newForm'>
-            <label htmlFor="file">
-                <img src="/attachment.png" alt="" />
-            </label>
-            <input id='file' type="file" multiple={false} hidden/>
-            <input type="text" placeholder='Ask anything...' name="text"  />
-            <button>
-                <img src="/arrow.png" alt="" />
-            </button>
-        </form>
-    </div>
-  )
-}
+  const endRef = useRef(null);
 
-export default NewPrompt
+  useEffect(() => {
+    endRef.current.scrollIntoView({behavior: "smooth"});
+  }, []);
+  return (
+    <>
+      {/* ADD NEW CHAT */}
+      Test
+
+      <div className="endChat" ref={endRef}></div>
+      <form className="newForm">
+        <label htmlFor="file">
+          <img src="/attachment.png" alt="" />
+        </label>
+        <input id="file" type="file" multiple={false} hidden />
+        <input type="text" placeholder="Ask anything..." name="text" />
+        <button>
+          <img src="/arrow.png" alt="" />
+        </button>
+      </form>
+    </>
+  );
+};
+
+export default NewPrompt;
