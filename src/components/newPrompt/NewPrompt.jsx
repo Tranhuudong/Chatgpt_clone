@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import "./NewPrompt.css";
+import Upload from "../upload/Upload";
 
 const NewPrompt = () => {
   const endRef = useRef(null);
@@ -14,9 +15,11 @@ const NewPrompt = () => {
 
       <div className="endChat" ref={endRef}></div>
       <form className="newForm">
-        <label htmlFor="file">
+        <Upload />
+
+        {/* <label htmlFor="file">
           <img src="/attachment.png" alt="" />
-        </label>
+        </label> */}
         <input id="file" type="file" multiple={false} hidden />
         <input type="text" placeholder="Ask anything..." name="text" />
         <button>
