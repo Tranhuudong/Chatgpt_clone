@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./DashboardLayout.css";
 import { Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
+import ChatList from "../../components/chatList/ChatList";
 
 const DashboardLayout = () => {
   const { userId, isLoaded } = useAuth();
@@ -16,7 +17,7 @@ const DashboardLayout = () => {
   if (!isLoaded) return "Loading...";
   return (
     <div className="dashboardLayout">
-      <div className="menu">MENU</div>
+      <div className="menu"><ChatList /></div>
       <div className="content">
         <Outlet />
       </div>
