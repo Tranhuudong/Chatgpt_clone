@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import UserChats from "./models/userChats.js";
 import Chat from "./models/chat.js";
+import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 dotenv.config();
 
 const port = process.env.PORT || 3000;
@@ -39,8 +40,15 @@ app.get("/api/upload", (req, res) => {
   res.json(result);
 });
 
-app.post("/api/chats", async (req, res) => {
-  const { userId, text } = req.body;
+// app.get("/api/test", ClerkExpressRequireAuth(), (req, res) => {
+//   const userId = req.auth.userId;
+//   console.log(userId)
+//   res.send("Success!")
+// })
+
+app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
+  const userId = req.auth.userId;
+  const { text } = req.body;
   try {
     // CREATE A NEW CHAT
     const newChat = new Chat({
@@ -52,6 +60,7 @@ app.post("/api/chats", async (req, res) => {
 
     // CHECK IF THE USERCHATS EXISTS
     const userChats = await UserChats.find({ userId: userId });
+    console.log('UserChats:', userChats);
 
     // IF DOESN'T EXIST CREATE A NEW ONE AND ADD THE CHAT IN THE CHATS ARRAY
 
@@ -60,7 +69,7 @@ app.post("/api/chats", async (req, res) => {
         userId: userId,
         chats: [
           {
-            _id: savedChat.id,
+            _id: savedChat._id,
             title: text.substring(0, 40),
           },
         ],
@@ -85,6 +94,11 @@ app.post("/api/chats", async (req, res) => {
     console.log(error);
     res.status(500).send("Error creating chat!");
   }
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(401).send("Unauthenticated!");
 });
 
 app.listen(port, () => {

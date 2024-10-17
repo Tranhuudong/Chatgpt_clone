@@ -6,16 +6,14 @@ const userChatsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    history: [
+    chats: [
       {
         _id: {
           type: String,
-          enum: ["user", "model"],
           required: true,
         },
         title: {
           type: String,
-          enum: ["user", "model"],
           required: true,
         },
         createdAt: {
