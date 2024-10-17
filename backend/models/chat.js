@@ -23,7 +23,7 @@ const chatSchema = new mongoose.Schema(
         ],
         img: {
           type: String,
-          required: true,
+          required: false,
         },
       },
     ],
@@ -31,4 +31,4 @@ const chatSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-export default mongoose.models.chat || mongoose.models("chat", chatSchema);
+export default mongoose.models.chat || mongoose.model("chat", chatSchema);
