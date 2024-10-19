@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+
 import "./ChatPage.css";
 import NewPrompt from "../../components/newPrompt/NewPrompt";
 import { useQuery } from "@tanstack/react-query";
@@ -17,7 +17,6 @@ const ChatPage = () => {
       }).then((res) => res.json()),
   });
   console.log(data);
-  console.log("chatId:", chatId)
 
   return (
     <div className="chatPage">
