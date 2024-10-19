@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import path from "path";
+import url, { fileURLToPath } from "url";
 import ImageKit from "imagekit";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
@@ -10,6 +12,9 @@ dotenv.config();
 
 const port = process.env.PORT || 3000;
 const app = express();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 app.use(
   cors({
@@ -40,12 +45,6 @@ app.get("/api/upload", (req, res) => {
   res.json(result);
 });
 
-// app.get("/api/test", ClerkExpressRequireAuth(), (req, res) => {
-//   const userId = req.auth.userId;
-//   console.log(userId)
-//   res.send("Success!")
-// })
-
 app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
   const userId = req.auth.userId;
   const { text } = req.body;
@@ -75,6 +74,7 @@ app.post("/api/chats", ClerkExpressRequireAuth(), async (req, res) => {
         ],
       });
       await newUserChats.save();
+      res.status(201).send(savedChat._id);
     } else {
       // IF EXISTS, PUSH THE CHAT TO THE EXISTING ARRAY
       await UserChats.updateOne(
@@ -156,6 +156,12 @@ app.use((err, req, res, next) => {
   res.status(401).send("Unauthenticated!");
 });
 
+// PRODUCTION
+app.use(express.static(path.join(__dirname, "../client/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../client/dist", "index.html"));
+});
 app.listen(port, () => {
   connect();
   console.log("server listening on port 3000");
